@@ -88,8 +88,8 @@ class EquivalentWords:
             reversedpathway = [self.goal] # the first word of the reversed pathway is the goal itself
             child = self.goal
             while child != self.start:
-                parent = self.find_previous(child) # starting from the leaf, find its parent
-                reversedpathway.append(parent) # and append it to the reversed pathway
+                parent = self.find_previous(child) # starting from the leaf, its parent is found
+                reversedpathway.append(parent) # the parent is appended to the reversed pathway
                 child = parent
             pathway = reversedpathway[::-1]
             msg = ""
