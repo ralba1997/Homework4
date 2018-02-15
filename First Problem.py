@@ -33,7 +33,7 @@ class EquivalentWords:
         self.alphabet = "abcdefghijklmnopqrstuvwxyz"
         self.tree = {}
         self.msg = ""
-        # Special cases, where we can not find a pathway
+        # Special cases, where a pathway cannot be found
         if type(self.english_words) == str:
             self.msg = "Sorry, the dictionary cannot be found: " + english_words
         elif start not in english_words:
