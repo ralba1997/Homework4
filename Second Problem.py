@@ -41,69 +41,68 @@ class GeneralizedEquivalentWords:
             self.msg = "Sorry, but the goal word is not in the dictionary"
         elif goal == start:
             self.msg = "The two words are equal, so there is no pathway between them"
-        else: #If there is not an error, the tree is built and we can find the path between the two words
+        else: #If there is not an error, the tree is built and the path between the two words can be found
             self.tree = self.build_tree()
             self.msg = self.find_path()
 
-    # This function create a tree starting from the start word, every leaf differ from its root by one 1 character, added, removed or substituted
+    # A tree with the start word as root is created. Every leaf differs from its parent by only one character, added, removed or substituted
     def build_tree(self):
-        goalfound = False #when the goal word is found the formation of the tree is stopped
-        to_explore_words = deque() #deque of all the leaves-words that has to be analized
-        to_explore_words.append(self.start) #the first word added is the start.
-        del english_words[self.start] #start has to be deleted from the dictionary , it can be found again creating a loop
-        while to_explore_words and not goalfound: #while there are words to check and the goal is not found
-            to_check_word = to_explore_words.popleft() #the first word to control is the first one of the list that is removed
+        goalfound = False # when the goal word is found the construction of the tree is stopped
+        to_explore_words = deque() # deque of all the leaves-words that have to be analyzed
+        to_explore_words.append(self.start) # the first word added is the start
+        del english_words[self.start] # start has to be deleted from the dictionary , otherwise it can be found again creating a loop
+        while to_explore_words and not goalfound: # while there are words to check and the goal is not found
+            to_check_word = to_explore_words.popleft() # the first word to check is the first one of the deque and it is removed from the deque 
             if to_check_word == self.goal:
                 goalfound = True
             else:
                 self.tree[to_check_word] = self.find_neighbors(to_check_word) #If the word is not the goal, find all the possible leaves of this word
-                to_explore_words.extend(self.tree[to_check_word]) #add more words to check
+                to_explore_words.extend(self.tree[to_check_word]) # add more words to check
         if not goalfound: #If there are not any words to check and goalfound is False
             self.tree.clear() #there is no pathway between start and goal
         return self.tree
 
-    # This function finds the neighbors(or leaves) of a word, i.e. the words that differ from a word by a character (substituted, deleted or added)
+    # The neighbors (or leaves) of a word, i.e. the words that differ from a word by a character (substituted, deleted or added), are found
     def find_neighbors(self, word):
         neighbors = []
-        for j in range(len(word)): #find all words that differ from the word by a character substituted
+        for j in range(len(word)): # find all words that differ from the word by a substituted character
             for char in self.alphabet:
                 newword = word[:j] + char + word[j + 1:]
                 if newword in self.english_words:
                     neighbors.append(newword)
-                    del english_words[newword] #newword is deleted, otherwise it can be found again
-        for j in range(len(word)): #find all words that differ from the word by a character deleted
+                    del english_words[newword] # newword is deleted, otherwise it can be found again
+        for j in range(len(word)): # find all words that differ from the word by a deleted character
             newword = word[:j] + word[j + 1:]
             if newword in english_words:
                 neighbors.append(newword)
-                del english_words[newword]
-        for j in range(len(word)): #find all the words that differ frome the word by a character added
+                del english_words[newword] # newword is deleted, otherwise it can be found again
+        for j in range(len(word)): # find all the words that differ from the word by an added character
             for char in self.alphabet:
                 newword = word[:j] + char + word[j:]
                 if newword in english_words:
                     neighbors.append(newword)
-                    del english_words[newword]
-
+                    del english_words[newword] # newword is deleted, otherwise it can be found again
         return neighbors
 
-    # This function finds a word starting from one of its leaves or neighbors
+    # A word is found starting from one of its leaves or neighbors
     def find_previous(self, word):
         for previous in self.tree:
             if word in self.tree[previous]:
                 return previous
 
-    # This function finds the pathway between the start and the goal, starting from the goal
+    # The pathway between the start and the goal, starting from the goal, is found
     def find_path(self):
-        if self.tree.get(self.start): #if the tree of the start word is not empty, than exists a pathway between start and goal
-            reversedpathway = [self.goal] #the first word of the reversed pathway is the goal itself
+        if self.tree.get(self.start): # if the tree with the start word as root is not empty, then a pathway between start and goal exists
+            reversedpathway = [self.goal] # the first word of the reversed pathway is the goal itself
             child = self.goal
             while child != self.start:
-                parent = self.find_previous(child) #starting from the leaf, we get its root
-                reversedpathway.append(parent) #and append it to the reversed pathway
+                parent = self.find_previous(child) # starting from the leaf, its parent is found
+                reversedpathway.append(parent) # the parent is appended to the reversed pathway
                 child = parent
             pathway = reversedpathway[::-1]
             for i in pathway:
                self.msg += i + " "
-        else: #if the tree of the start word is empty, there is no pathway between the two words
+        else: # if the tree with the start word as root is empty, there is no pathway between the two words
             self.msg = "Sorry, but there is no pathway between start and goal"
         return self.msg
 
