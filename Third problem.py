@@ -31,9 +31,9 @@ def NucleotideGame(Nucleotide_Sequence):  # take as input a random nucleotide se
     if values == [0, 0, 0, 0]:
         return "IMPOSSIBLE GAME"
 
-    # Case1: Only one non-empty heap
-    if values[:3] == [0, 0, 0] and values[3] != 0:
-        return "FIRST PLAYER LOSES"
+    # Case1: Only one non-empty heap, starting losing position by definition
+    if values[:3] == [0, 0, 0]:
+        return "FIRST PLAYER LOSES, even if he is in a losing position by definition"
 
     # Case2: If "total" is a multiple of 3, the second player wins the game,
     # but there are 18 exceptions where the first player wins and where the three smallest heaps are:
