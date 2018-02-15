@@ -4,7 +4,7 @@ print("\n Find an algorithm to solve a generalization of Equivalent Words "
       "\n head → tead → tea"
       "\n")
 
-# A word ladder solution using a tree which is implemented with a Python dictionary: starting from the start word
+# A solution using a tree which is implemented with a Python dictionary: starting from the start word
 # leaves are added until there are children. If the goal is found the procedure ends and the path from the start
 # word to the goal word is given.
 
@@ -12,7 +12,7 @@ import json
 import os, sys
 from collections import deque
 
-#read english_dictionary
+# read english_dictionary
 def load_words():
     try:
         path = os.path.dirname(os.path.realpath(__file__))
@@ -23,7 +23,7 @@ def load_words():
     except Exception as e:
         return str(e)
 
-# Creation a class that uses as parameters the starting word, the goal word and a dictionary
+# Creation of a class that uses as parameters the starting word, the goal word and a dictionary
 class GeneralizedEquivalentWords:
     def __init__(self, start, goal, english_words):
         self.start = start
@@ -32,7 +32,7 @@ class GeneralizedEquivalentWords:
         self.alphabet = "abcdefghijklmnopqrstuvwxyz"
         self.tree = {}
         self.msg = ""
-        #Special cases, where we can not find a pathway
+        # Special cases, where a pathway cannot be found
         if type(self.english_words) == str:
             self.msg = "Sorry, the dictionary cannot be found:" + english_words
         elif start not in english_words:
