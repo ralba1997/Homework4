@@ -44,7 +44,7 @@ class EquivalentWords:
             self.msg = "The two words are equal, so there is no pathway between them"
         elif len(start) != len(goal):
             self.msg = "The two words have different lengths, so there is no pathway between them"
-        else: #If there is not an error, the tree is built and we can find the path between the two words
+        else: #If there is not an error, the tree is built and the path between the two words can be found
             self.build_tree()
             self.msg = self.find_path()
 
